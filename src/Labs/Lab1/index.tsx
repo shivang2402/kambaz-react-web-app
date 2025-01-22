@@ -286,7 +286,7 @@ export default function Lab1() {
       <a href="https://www.lipsum.com" id="wd-lipsum"> click here </a>
       to get dummy text<br />
       Check out my code repository on GitHub:
-      <a href="https://github.com/shivang2402/News-Bias-Detection"
+      <a href="https://github.com/shivang2402/kambaz-react-web-app/tree/assignment1"
         id="wd-github" >here</a>.
     </div>);
 }

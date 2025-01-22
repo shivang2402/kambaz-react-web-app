@@ -17,8 +17,7 @@ export default function Dashboard() {
             </div>
           </Link>
         </div>
-        <div className="wd-dashboard-course"> ... </div>
-        <div className="wd-dashboard-course"> ... </div>
+        
       </div>
     </div>
 );}

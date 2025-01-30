@@ -1,4 +1,4 @@
-# MERN Full Stack Web Application
+# Kambaz - A Full Stack Web Application
 
 ## Project Overview  
 This project is a **MERN stack** web application built following the guidance in *Developing Full Stack MERN Web Applications* by Dr. Jose Annunziato. It demonstrates how to develop **React-based front-end user interfaces**, **Node.js and Express.js-based RESTful APIs**, and **MongoDB integration** for data storage.  

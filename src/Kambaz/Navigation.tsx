@@ -89,7 +89,7 @@ import Nav from "react-bootstrap/Nav";export default function KambazNavigation()
         <Nav.Item className="mb-2">
           <Nav.Link
             as={Link}
-            to="/Kambaz/Settings"
+            to="/Labs"
             id="wd-settings-link"
             className="list-group-item text-center border-0 bg-black text-white"
           >

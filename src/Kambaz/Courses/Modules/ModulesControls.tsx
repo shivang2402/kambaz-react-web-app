@@ -5,12 +5,12 @@ import { Button, Dropdown } from "react-bootstrap";
 export default function ModulesControls() {
   return (
     <div id="wd-modules-controls" className="text-nowrap">
-      <Button variant="danger" size="lg" className="me-1 float-end" id="wd-add-module-btn">
+      <Button variant="danger" size="sm" className="me-1 float-end" id="wd-add-module-btn">
         <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
         Module
       </Button>
       <Dropdown className="float-end me-2">
-        <Dropdown.Toggle variant="secondary" size="lg" id="wd-publish-all-btn">
+        <Dropdown.Toggle variant="secondary" size="sm" id="wd-publish-all-btn">
           <GreenCheckmark /> Publish All
         </Dropdown.Toggle>
         <Dropdown.Menu>
@@ -32,10 +32,10 @@ export default function ModulesControls() {
         </Dropdown.Menu>
       </Dropdown>
 
-      <Button variant="primary" size="lg" className="me-2 float-end" id="wd-view-progress">
+      <Button variant="primary" size="sm" className="me-2 float-end" id="wd-view-progress">
         View Progress
       </Button>
-      <Button variant="secondary" size="lg" className="me-2 float-end" id="wd-collapse-all">
+      <Button variant="secondary" size="sm" className="me-2 float-end" id="wd-collapse-all">
         Collapse All
       </Button>
     </div>

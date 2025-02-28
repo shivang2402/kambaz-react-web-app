@@ -88,6 +88,8 @@ import { useParams } from "react-router";
 import { ListGroup } from "react-bootstrap";
 import { BsGripVertical } from "react-icons/bs";
 import * as db from "../../Database";
+import "../../styles.css";
+
 
 import ModulesControls from "./ModulesControls";
 import ModuleControlButtons from "./ModuleControlButtons";
@@ -104,6 +106,9 @@ export default function Modules() {
   return (
     <div>
       <ModulesControls />
+      <br />
+      <br />
+      <br />
       <br />
       <ListGroup id="wd-modules" className="list-group rounded-0">
         {modules.map((module: any) => (

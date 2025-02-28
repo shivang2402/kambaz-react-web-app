@@ -1,7 +1,20 @@
+import React from "react";
+import { useParams } from "react-router-dom";
 import { Table } from "react-bootstrap";
 import { FaUserCircle } from "react-icons/fa";
+import * as db from "../../Database"; // Import users and enrollments
 
 export default function PeopleTable() {
+    const { cid } = useParams(); // Get course ID from URL
+    const { users, enrollments } = db; // Load data
+
+    // Filter users based on enrollments
+    const enrolledUsers = users.filter((usr) =>
+        enrollments.some(
+            (enrollment) => enrollment.user === usr._id && enrollment.course === cid
+        )
+    );
+
     return (
         <div
             id="wd-people-table"
@@ -11,13 +24,7 @@ export default function PeopleTable() {
                 marginRight: "1.5rem",
             }}
         >
-            <Table
-                striped
-                className="table-sm"
-                style={{
-                    margin: "0",
-                }}
-            >
+            <Table striped className="table-sm" style={{ margin: "0" }}>
                 <thead>
                     <tr>
                         <th style={{ padding: "0.5rem" }}>Name</th>
@@ -29,78 +36,31 @@ export default function PeopleTable() {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td
-                            className="wd-full-name text-nowrap"
-                            style={{ padding: "0.5rem" }}
-                        >
-                            <FaUserCircle
-                                className="me-2 text-secondary"
-                                style={{ fontSize: "1.0rem" }}
-                            />
-                            <span className="wd-first-name">Sheldon</span>{" "}
-                            <span className="wd-last-name">Cooper</span>
-                        </td>
-                        <td style={{ padding: "0.5rem" }}>001234561S</td>
-                        <td style={{ padding: "0.5rem" }}>S101</td>
-                        <td style={{ padding: "0.5rem" }}>STUDENT</td>
-                        <td style={{ padding: "0.5rem" }}>2020-10-01</td>
-                        <td style={{ padding: "0.5rem" }}>10:21:32</td>
-                    </tr>
-                    <tr>
-                        <td
-                            className="wd-full-name text-nowrap"
-                            style={{ padding: "0.5rem" }}
-                        >
-                            <FaUserCircle
-                                className="me-2 text-secondary"
-                                style={{ fontSize: "1.0rem" }}
-                            />
-                            <span className="wd-first-name">Leonard</span>{" "}
-                            <span className="wd-last-name">Hofstadter</span>
-                        </td>
-                        <td style={{ padding: "0.5rem" }}>001234562L</td>
-                        <td style={{ padding: "0.5rem" }}>S102</td>
-                        <td style={{ padding: "0.5rem" }}>STUDENT</td>
-                        <td style={{ padding: "0.5rem" }}>2020-10-02</td>
-                        <td style={{ padding: "0.5rem" }}>12:15:45</td>
-                    </tr>
-                    <tr>
-                        <td
-                            className="wd-full-name text-nowrap"
-                            style={{ padding: "0.5rem" }}
-                        >
-                            <FaUserCircle
-                                className="me-2 text-secondary"
-                                style={{ fontSize: "1.0rem" }}
-                            />
-                            <span className="wd-first-name">Penny</span>{" "}
-                            <span className="wd-last-name">Hofstadter</span>
-                        </td>
-                        <td style={{ padding: "0.5rem" }}>001234563P</td>
-                        <td style={{ padding: "0.5rem" }}>S103</td>
-                        <td style={{ padding: "0.5rem" }}>STUDENT</td>
-                        <td style={{ padding: "0.5rem" }}>2020-10-03</td>
-                        <td style={{ padding: "0.5rem" }}>15:30.5</td>
-                    </tr>
-                    <tr>
-                        <td
-                            className="wd-full-name text-nowrap"
-                            style={{ padding: "0.5rem" }}
-                        >
-                            <FaUserCircle
-                                className="me-2 text-secondary"
-                                style={{ fontSize: "1.0rem" }}
-                            />
-                            <span className="wd-first-name">Rajesh</span>{" "}
-                            <span className="wd-last-name">Koothrappali</span>
-                        </td>
-                        <td style={{ padding: "0.5rem" }}>001234564R</td>
-                        <td style={{ padding: "0.5rem" }}>S104</td>
-                        <td style={{ padding: "0.5rem" }}>STUDENT</td>
-                        <td style={{ padding: "0.5rem" }}>2020-10-04</td>
-                        <td style={{ padding: "0.5rem" }}>08:45:00</td>
-                    </tr>
+                    {enrolledUsers.length > 0 ? (
+                        enrolledUsers.map((user) => (
+                            <tr key={user._id}>
+                                <td className="wd-full-name text-nowrap" style={{ padding: "0.5rem" }}>
+                                    <FaUserCircle
+                                        className="me-2 text-secondary"
+                                        style={{ fontSize: "1.0rem" }}
+                                    />
+                                    <span className="wd-first-name">{user.firstName}</span>{" "}
+                                    <span className="wd-last-name">{user.lastName}</span>
+                                </td>
+                                <td style={{ padding: "0.5rem" }}>{user.loginId}</td>
+                                <td style={{ padding: "0.5rem" }}>{user.section}</td>
+                                <td style={{ padding: "0.5rem" }}>{user.role}</td>
+                                <td style={{ padding: "0.5rem" }}>{user.lastActivity}</td>
+                                <td style={{ padding: "0.5rem" }}>{user.totalActivity}</td>
+                            </tr>
+                        ))
+                    ) : (
+                        <tr>
+                            <td colSpan={6} style={{ textAlign: "center", padding: "1rem" }}>
+                                No users enrolled in this course.
+                            </td>
+                        </tr>
+                    )}
                 </tbody>
             </Table>
         </div>

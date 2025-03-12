@@ -158,37 +158,324 @@
 //             </Form>
 //         </div>
 //     );
+// }import { Col, Container, Form, Row } from "react-bootstrap";
+// import { Col, Container, Form, Row } from "react-bootstrap";
+// import { Link, useNavigate, useParams } from "react-router-dom";
+// import { useEffect, useState } from "react";
+// import { useDispatch, useSelector } from "react-redux";
+// import { addAssignment, updateAssignment } from "./reducer";
+// import { v4 as uuidv4 } from "uuid";
+
+// export default function AssignmentEditor() {
+//   const { aid, cid } = useParams<{ aid?: string; cid?: string }>();
+//   const { assignments } = useSelector((state: any) => state.assignmentsReducer);
+//   const dispatch = useDispatch();
+//   const navigate = useNavigate();
+
+//   // Find existing assignment or initialize a new one
+//   const existingAssignment = assignments.find((a: any) => a._id === aid);
+//   const isEditing = Boolean(aid && existingAssignment);
+
+//   const [assignment, setAssignment] = useState(
+//     existingAssignment || {
+//       _id: uuidv4(), // Ensure a new ID is generated for new assignments
+//       title: "",
+//       description: "",
+//       points: 0,
+//       due_date: "",
+//       available_date: "",
+//       course: cid || "",
+//     }
+//   );
+
+//   // Redirect if editing an assignment that does not exist
+//   useEffect(() => {
+//     if (aid && !existingAssignment) {
+//       navigate(`/Kambaz/Courses/${cid}/Assignments`);
+//     }
+//   }, [aid, existingAssignment, navigate, cid]);
+
+//   const handleSaveClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+//     event.preventDefault(); // Prevents page refresh
+
+//     if (!assignment.title.trim()) {
+//       alert("Assignment title is required.");
+//       return;
+//     }
+
+//     if (isEditing) {
+//       dispatch(updateAssignment(assignment));
+//     } else {
+//       dispatch(addAssignment(assignment));
+//     }
+
+//     navigate(`/Kambaz/Courses/${cid}/Assignments`);
+//   };
+
+//   return (
+//     <Container id="wd-assignments-editor">
+//       <Form>
+//         <Form.Group controlId="wd-name">
+//           <Form.Label>Assignment Name</Form.Label>
+//           <Form.Control
+//             type="text"
+//             value={assignment.title}
+//             onChange={(e) => setAssignment({ ...assignment, title: e.target.value })}
+//           />
+//         </Form.Group>
+
+//         <br />
+
+//         <Form.Group controlId="wd-description">
+//           <Form.Label>Description</Form.Label>
+//           <Form.Control
+//             as="textarea"
+//             value={assignment.description}
+//             onChange={(e) => setAssignment({ ...assignment, description: e.target.value })}
+//             rows={4}
+//           />
+//         </Form.Group>
+
+//         <br />
+
+//         <Form.Group controlId="wd-points">
+//           <Row>
+//             <Col md={6} className="d-flex justify-content-end">
+//               <Form.Label>Points</Form.Label>
+//             </Col>
+//             <Col md={6}>
+//               <Form.Control
+//                 type="number"
+//                 value={assignment.points}
+//                 onChange={(e) => setAssignment({ ...assignment, points: parseInt(e.target.value) || 0 })}
+//               />
+//             </Col>
+//           </Row>
+//         </Form.Group>
+
+//         <br />
+
+//         <Form.Group controlId="wd-available-from">
+//           <Row>
+//             <Col md={6} className="d-flex justify-content-end">
+//               <Form.Label>Available from</Form.Label>
+//             </Col>
+//             <Col md={6}>
+//               <Form.Control
+//                 type="date"
+//                 value={assignment.available_date}
+//                 onChange={(e) => setAssignment({ ...assignment, available_date: e.target.value })}
+//               />
+//             </Col>
+//           </Row>
+//         </Form.Group>
+
+//         <br />
+
+//         <Form.Group controlId="wd-available-until">
+//           <Row>
+//             <Col md={6} className="d-flex justify-content-end">
+//               <Form.Label>Available until</Form.Label>
+//             </Col>
+//             <Col md={6}>
+//               <Form.Control
+//                 type="date"
+//                 value={assignment.due_date}
+//                 onChange={(e) => setAssignment({ ...assignment, due_date: e.target.value })}
+//               />
+//             </Col>
+//           </Row>
+//         </Form.Group>
+
+//         <br />
+//         <hr />
+
+//         <Container className="d-flex justify-content-end">
+//           <Link to={`/Kambaz/Courses/${cid}/Assignments`} className="btn btn-secondary text-dark me-2">
+//             Cancel
+//           </Link>
+//           <button type="button" className="btn btn-danger text-white" onClick={handleSaveClick}>
+//             Save
+//           </button>
+//         </Container>
+//       </Form>
+//     </Container>
+//   );
 // }
+
+
+// import React, { useState } from "react";
+// import { useDispatch } from "react-redux";
+// import { useNavigate, useParams } from "react-router-dom";
+// import { addAssignment } from "./reducer";
+
+// const AssignmentEditor = () => {
+//   const { cid } = useParams<{ cid?: string }>();
+//   const dispatch = useDispatch();
+//   const navigate = useNavigate();
+
+//   const [title, setTitle] = useState("");
+//   const [description, setDescription] = useState("");
+//   const [points, setPoints] = useState(0);
+//   const [dueDate, setDueDate] = useState("");
+//   const [availableDate, setAvailableDate] = useState("");
+
+//   const handleSave = () => {
+//     if (!title || !dueDate || !points) {
+//       alert("Please fill in required fields!");
+//       return;
+//     }
+
+//     const newAssignment = {
+//       title,
+//       course: cid,
+//       description,
+//       points,
+//       due_date: dueDate,
+//       available_date: availableDate,
+//     };
+
+//     dispatch(addAssignment(newAssignment));
+//     navigate(`/Kambaz/Courses/${cid}/Assignments`);
+//   };
+
+//   return (
+//     <div className="container">
+//       <h2>Create Assignment</h2>
+//       <div className="mb-3">
+//         <label className="form-label">Title</label>
+//         <input
+//           type="text"
+//           className="form-control"
+//           value={title}
+//           onChange={(e) => setTitle(e.target.value)}
+//         />
+//       </div>
+
+//       <div className="mb-3">
+//         <label className="form-label">Description</label>
+//         <textarea
+//           className="form-control"
+//           value={description}
+//           onChange={(e) => setDescription(e.target.value)}
+//         ></textarea>
+//       </div>
+
+//       <div className="mb-3">
+//         <label className="form-label">Points</label>
+//         <input
+//           type="number"
+//           className="form-control"
+//           value={points}
+//           onChange={(e) => setPoints(Number(e.target.value))}
+//         />
+//       </div>
+
+//       <div className="mb-3">
+//         <label className="form-label">Due Date</label>
+//         <input
+//           type="date"
+//           className="form-control"
+//           value={dueDate}
+//           onChange={(e) => setDueDate(e.target.value)}
+//         />
+//       </div>
+
+//       <div className="mb-3">
+//         <label className="form-label">Available Date</label>
+//         <input
+//           type="date"
+//           className="form-control"
+//           value={availableDate}
+//           onChange={(e) => setAvailableDate(e.target.value)}
+//         />
+//       </div>
+
+//       <button className="btn btn-success me-2" onClick={handleSave}>
+//         Save
+//       </button>
+//       <button
+//         className="btn btn-secondary"
+//         onClick={() => navigate(`/Kambaz/Courses/${cid}/Assignments`)}
+//       >
+//         Cancel
+//       </button>
+//     </div>
+//   );
+// };
+
+// export default AssignmentEditor;
+
+
 import { Col, Container, Form, Row } from "react-bootstrap";
-import { Link, useParams } from "react-router-dom"; // Fixed import for react-router-dom
-import { assignments } from "../../Database";
+import { Link, useNavigate, useParams } from "react-router";
+import { useRef, useState } from "react";
+import { addAssignment, updateAssignment } from "./reducer";
+import { useDispatch, useSelector } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
 
 export default function AssignmentEditor() {
   const { aid, cid } = useParams();
-  const assignment = assignments.find((assignment) => assignment._id === aid);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { assignments } = useSelector((state: any) => state.assignmentsReducer);
+  const existingAssignment = assignments.find((a: any) => a._id === aid);
+  const isEditingRef = useRef(!!existingAssignment);
+
+  const [assignment, setAssignment] = useState<any>(
+    existingAssignment || {
+      _id: uuidv4(), // Generate a new ID if creating a new assignment
+      title: "",
+      description: "",
+      points: 0,
+      due_date: "",
+      available_date: "",
+      course: cid,
+    }
+  );
+
+  const handleSaveClick = () => {
+    if (!assignment.title.trim() || !assignment.due_date.trim() || assignment.points <= 0) {
+      alert("Please fill in all required fields!");
+      return;
+    }
+
+    if (isEditingRef.current) {
+      dispatch(updateAssignment(assignment));
+    } else {
+      dispatch(addAssignment(assignment));
+    }
+
+    navigate(`/Kambaz/Courses/${cid}/Assignments`);
+  };
 
   return (
     <Container id="wd-assignments-editor">
       <Form>
         <Form.Group controlId="wd-name">
           <Form.Label>Assignment Name</Form.Label>
-          <Form.Control type="text" defaultValue={assignment?.title || ""} readOnly />
-        </Form.Group>
-
-        <br />
-
-        <Form.Group controlId="wd-description">
-          <Form.Label>Description</Form.Label>
           <Form.Control
-            as="textarea"
-            defaultValue={assignment?.description || ""}
-            rows={4}
-            readOnly
+            id="wd-name"
+            type="text"
+            value={assignment.title}
+            onChange={(e) => setAssignment({ ...assignment, title: e.target.value })}
           />
         </Form.Group>
 
         <br />
+        <Form.Group controlId="wd-description">
+          <Form.Label>Description</Form.Label>
+          <Form.Control
+            id="wd-description"
+            as="textarea"
+            value={assignment.description}
+            onChange={(e) => setAssignment({ ...assignment, description: e.target.value })}
+            rows={4}
+          />
+        </Form.Group>
 
+        <br />
         <Form.Group controlId="wd-points">
           <Row>
             <Col md={6} className="d-flex justify-content-end">
@@ -196,118 +483,45 @@ export default function AssignmentEditor() {
             </Col>
             <Col md={6}>
               <Form.Control
+                id="wd-points"
                 type="number"
-                defaultValue={assignment?.points || 0}
-                readOnly
+                value={assignment.points}
+                onChange={(e) => setAssignment({ ...assignment, points: Number(e.target.value) })}
               />
             </Col>
           </Row>
         </Form.Group>
 
         <br />
-
-        <Form.Group controlId="wd-group">
+        <Form.Group controlId="wd-due-date">
           <Row>
             <Col md={6} className="d-flex justify-content-end">
-              <Form.Label>Assignment Group</Form.Label>
+              <Form.Label>Due Date</Form.Label>
             </Col>
             <Col md={6}>
-              <Form.Select defaultValue="assignment" disabled>
-                <option value="assignment">ASSIGNMENTS</option>
-                <option value="quiz">QUIZZES</option>
-                <option value="exams">EXAMS</option>
-                <option value="project">PROJECT</option>
-              </Form.Select>
+              <Form.Control
+                id="wd-due-date"
+                type="date"
+                value={assignment.due_date}
+                onChange={(e) => setAssignment({ ...assignment, due_date: e.target.value })}
+              />
             </Col>
           </Row>
         </Form.Group>
 
         <br />
-
-        <Form.Group controlId="wd-display-grade-as">
+        <Form.Group controlId="wd-available-from">
           <Row>
             <Col md={6} className="d-flex justify-content-end">
-              <Form.Label>Display Grade As</Form.Label>
+              <Form.Label>Available From</Form.Label>
             </Col>
             <Col md={6}>
-              <Form.Select defaultValue="percentage" disabled>
-                <option value="percentage">Percentage</option>
-              </Form.Select>
-            </Col>
-          </Row>
-        </Form.Group>
-
-        <br />
-
-        <Form.Group controlId="wd-submission-type">
-          <Row>
-            <Col md={6} className="d-flex justify-content-end">
-              <Form.Label>Submission Type</Form.Label>
-            </Col>
-            <Col md={6}>
-              <Form.Select defaultValue="online" disabled>
-                <option value="online">Online</option>
-                <option value="offline">Offline</option>
-              </Form.Select>
-
-              <div className="mt-3">
-                <h5>Online Entry Options</h5>
-                <Form.Check type="checkbox" label="Text Entry" disabled />
-                <Form.Check type="checkbox" label="Website URL" disabled />
-                <Form.Check type="checkbox" label="Media Recordings" disabled />
-                <Form.Check type="checkbox" label="Student Annotation" disabled />
-                <Form.Check type="checkbox" label="File Uploads" disabled />
-              </div>
-            </Col>
-          </Row>
-        </Form.Group>
-
-        <br />
-
-        <Form.Group controlId="wd-assign-to">
-          <Row>
-            <Col md={6} className="d-flex justify-content-end">
-              <Form.Label>Assign</Form.Label>
-            </Col>
-            <Col md={6}>
-              <Form.Label>Assign To</Form.Label>
-              <Form.Control type="text" defaultValue="Everyone" readOnly />
-
-              <br />
-
-              <Form.Group controlId="wd-due-date">
-                <Form.Label>Due</Form.Label>
-                <Form.Control
-                  type="date"
-                  defaultValue={assignment?.dueDate || "2025-01-02"}
-                  readOnly
-                />
-              </Form.Group>
-
-              <br />
-
-              <Row>
-                <Col md={6}>
-                  <Form.Group controlId="wd-available-from">
-                    <Form.Label>Available from</Form.Label>
-                    <Form.Control
-                      type="date"
-                      defaultValue={assignment?.availableFrom || "2025-01-01"}
-                      readOnly
-                    />
-                  </Form.Group>
-                </Col>
-                <Col md={6}>
-                  <Form.Group controlId="wd-available-until">
-                    <Form.Label>Until</Form.Label>
-                    <Form.Control
-                      type="date"
-                      defaultValue={assignment?.availableUntil || "2025-01-10"}
-                      readOnly
-                    />
-                  </Form.Group>
-                </Col>
-              </Row>
+              <Form.Control
+                id="wd-available-from"
+                type="date"
+                value={assignment.available_date}
+                onChange={(e) => setAssignment({ ...assignment, available_date: e.target.value })}
+              />
             </Col>
           </Row>
         </Form.Group>
@@ -322,12 +536,9 @@ export default function AssignmentEditor() {
           >
             Cancel
           </Link>
-          <Link
-            to={`/Kambaz/Courses/${cid}/Assignments`}
-            className="btn btn-danger text-white"
-          >
+          <button onClick={handleSaveClick} className="btn btn-danger text-white">
             Save
-          </Link>
+          </button>
         </Container>
       </Form>
     </Container>

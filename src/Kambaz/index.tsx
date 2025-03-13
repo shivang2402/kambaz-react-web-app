@@ -79,6 +79,8 @@ export default function Kambaz() {
           <Route path="/Account/*" element={<Account />} />
           <Route path="Dashboard" element={
             <ProtectedRoute>
+              {/* @ts-ignore */}
+
               <Dashboard
                 courses={courses}
                 course={course}

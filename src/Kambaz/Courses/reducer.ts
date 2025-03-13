@@ -5,44 +5,33 @@ interface CoursesState {
   courses: Course[];
 }
 
-const defaultCourses: Course[] = [
-  {
-    id: "101",
-    name: "Intro to Programming",
-    description: "Learn the basics of programming with Python and JavaScript.",
-    number: "CS101",
-    startDate: "2024-01-10",
-    endDate: "2024-05-15",
-    image: "https://example.com/course-images/programming.jpg",
-    title: "Introduction to Programming",
-    instructor: "Dr. John Doe"
-  },
-  {
-    id: "102",
-    name: "Web Development Basics",
-    description: "Understand the core concepts of web development using HTML, CSS, and JavaScript.",
-    number: "CS102",
-    startDate: "2024-02-01",
-    endDate: "2024-06-20",
-    image: "https://example.com/course-images/web-development.jpg",
-    title: "Web Development Fundamentals",
-    instructor: "Prof. Jane Smith"
-  },
-  {
-    id: "103",
-    name: "Database Foundations",
-    description: "Master SQL and database design principles for structured data management.",
-    number: "CS103",
-    startDate: "2024-03-15",
-    endDate: "2024-07-30",
-    image: "https://example.com/course-images/database.jpg",
-    title: "Database Foundations",
-    instructor: "Dr. Alice Johnson"
-  },
-];
-
 const initialState: CoursesState = {
-  courses: defaultCourses, // Ensure these courses exist for all users
+  courses: [
+    {
+      id: "course-101", title: "Introduction to Programming", description: "Learn the basics of programming.", instructor: "John Doe",
+      name: undefined,
+      number: undefined,
+      startDate: undefined,
+      endDate: undefined,
+      image: undefined
+    },
+    {
+      id: "course-202", title: "Advanced JavaScript", description: "Deep dive into modern JavaScript concepts.", instructor: "Jane Smith",
+      name: undefined,
+      number: undefined,
+      startDate: undefined,
+      endDate: undefined,
+      image: undefined
+    },
+    {
+      id: "course-303", title: "Data Structures & Algorithms", description: "Understand fundamental data structures and algorithms.", instructor: "Alice Johnson",
+      name: undefined,
+      number: undefined,
+      startDate: undefined,
+      endDate: undefined,
+      image: undefined
+    }
+  ],
 };
 
 const coursesSlice = createSlice({

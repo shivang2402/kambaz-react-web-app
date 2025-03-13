@@ -1,11 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+// Default prerequisite courses for automatic enrollment
+const defaultEnrolledCourses: string[] = ["101", "102", "103"];
+
 interface EnrollmentState {
   enrolledCourses: string[];
 }
 
 const initialState: EnrollmentState = {
-  enrolledCourses: [],
+  enrolledCourses: defaultEnrolledCourses, // Automatically enroll users in default courses
 };
 
 const enrollmentsSlice = createSlice({

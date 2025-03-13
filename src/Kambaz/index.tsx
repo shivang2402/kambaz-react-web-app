@@ -93,14 +93,14 @@ export default function Kambaz() {
               </ProtectedRoute>
             }
           />
-<Route
-  path="/Courses/:cid/*"
-  element={
-    <ProtectedRoute>
-      {React.createElement(Courses as React.ElementType, { courses })}
-    </ProtectedRoute>
-  }
-/>
+          <Route
+            path="/Courses/:cid/*"
+            element={
+              <ProtectedRoute>
+                {React.createElement(Courses as React.ElementType, { courses })}
+              </ProtectedRoute>
+            }
+          />
           <Route path="/Calendar" element={<h1>Calendar</h1>} />
           <Route path="/Inbox" element={<h1>Inbox</h1>} />
 

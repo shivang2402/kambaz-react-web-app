@@ -94,7 +94,6 @@ type Assignment = {
 function AssignmentCard({ assignment }: { assignment: Assignment }) {
   const { cid } = useParams<{ cid?: string }>();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { currentUser } = useSelector((state: any) => state.accountReducer);
 
   const handleDelete = (e: React.MouseEvent) => {

@@ -8,29 +8,101 @@ interface CoursesState {
 const initialState: CoursesState = {
   courses: [
     {
-      id: "course-101", title: "Introduction to Programming", description: "Learn the basics of programming.", instructor: "John Doe",
-      name: undefined,
-      number: undefined,
-      startDate: undefined,
-      endDate: undefined,
-      image: undefined
+      id: "RS101",
+      name: "Rocket Propulsion",
+      number: "RS4550",
+      startDate: "2023-01-10",
+      endDate: "2023-05-15",
+      description:
+        "This course provides an in-depth study of the fundamentals of rocket propulsion, covering topics such as propulsion theory, engine types, fuel chemistry, and the practical applications of rocket technology. Designed for students with a strong background in physics and engineering, the course includes both theoretical instruction and hands-on laboratory work.",
+      image: "/images/reactjs.jpg",
+      title: "Rocket Propulsion",
+      instructor: "",
     },
     {
-      id: "course-202", title: "Advanced JavaScript", description: "Deep dive into modern JavaScript concepts.", instructor: "Jane Smith",
-      name: undefined,
-      number: undefined,
-      startDate: undefined,
-      endDate: undefined,
-      image: undefined
+      id: "RS102",
+      name: "Aerodynamics",
+      number: "RS4560",
+      startDate: "2023-01-10",
+      endDate: "2023-05-15",
+      description:
+        "This course offers a comprehensive exploration of aerodynamics, focusing on the principles and applications of airflow and its effects on flying objects. Topics include fluid dynamics, airfoil design, lift and drag forces, and the aerodynamic considerations in aircraft design. The course blends theoretical learning with practical applications, suitable for students pursuing a career in aeronautics or astronautics engineering.",
+      image: "/images/reactjs.jpg",
+      title: "Aerodynamics",
+      instructor: "",
     },
     {
-      id: "course-303", title: "Data Structures & Algorithms", description: "Understand fundamental data structures and algorithms.", instructor: "Alice Johnson",
-      name: undefined,
-      number: undefined,
-      startDate: undefined,
-      endDate: undefined,
-      image: undefined
-    }
+      id: "RS103",
+      name: "Spacecraft Design",
+      number: "RS4570",
+      startDate: "2023-01-10",
+      endDate: "2023-05-15",
+      description:
+        "This course delves into the principles and practices of spacecraft design, offering students a detailed understanding of the engineering and technology behind spacecraft systems. Key topics include spacecraft structure, propulsion, power systems, thermal control, and payload integration. Emphasizing both theoretical concepts and practical skills, the course prepares students for careers in the space industry, with a focus on innovative design and problem-solving in the context of current and future space missions.",
+      image: "/images/reactjs.jpg",
+      title: "Spacecraft Design",
+      instructor: "",
+    },
+    {
+      id: "RS104",
+      name: "Organic Chemistry",
+      number: "CH1230",
+      startDate: "2023-01-10",
+      endDate: "2023-05-15",
+      description:
+        "Organic Chemistry is an in-depth course that explores the structure, properties, composition, and reactions of organic compounds and materials. The course covers various topics including hydrocarbons, functional groups, stereochemistry, and organic synthesis techniques.",
+      image: "/images/reactjs.jpg",
+      title: "Organic Chemistry",
+      instructor: "",
+    },
+    {
+      id: "RS105",
+      name: "Inorganic Chemistry",
+      number: "CH1240",
+      startDate: "2023-01-10",
+      endDate: "2023-05-15",
+      description:
+        "Inorganic Chemistry focuses on the properties, structures, and behaviors of inorganic and organometallic compounds. This course covers a range of topics including coordination chemistry, metal complexes, bonding theories, symmetry, and crystal field theory.",
+      image: "/images/reactjs.jpg",
+      title: "Inorganic Chemistry",
+      instructor: "",
+    },
+    {
+      id: "RS106",
+      name: "Physical Chemistry",
+      number: "CH1250",
+      startDate: "2023-01-10",
+      endDate: "2023-05-15",
+      description:
+        "Physical Chemistry merges the principles of physics and chemistry to understand the physical properties of molecules, the forces that act upon them, and the chemical reactions they undergo.",
+      image: "/images/reactjs.jpg",
+      title: "Physical Chemistry",
+      instructor: "",
+    },
+    {
+      id: "RS107",
+      name: "Ancient Languages and Scripts of Middle-earth",
+      number: "ME101",
+      startDate: "2023-01-10",
+      endDate: "2023-05-15",
+      description:
+        "This course offers an exploration of the ancient languages and scripts found throughout Middle-earth, including Elvish (Sindarin and Quenya), Dwarvish (Khuzdul), and the Black Speech of Mordor.",
+      image: "/images/reactjs.jpg",
+      title: "Ancient Languages and Scripts of Middle-earth",
+      instructor: "",
+    },
+    {
+      id: "RS108",
+      name: "Wizards, Elves, and Men: Inter-species Diplomacy in Middle-earth",
+      number: "ME102",
+      startDate: "2023-01-10",
+      endDate: "2023-05-15",
+      description:
+        "This course explores the complex relationships and diplomatic interactions among the different races of Middle-earth: Elves, Men, Dwarves, and Wizards.",
+      image: "/images/reactjs.jpg",
+      title: "Wizards, Elves, and Men: Inter-species Diplomacy in Middle-earth",
+      instructor: "",
+    },
   ],
 };
 
@@ -42,10 +114,10 @@ const coursesSlice = createSlice({
       state.courses.push(action.payload);
     },
     deleteCourse: (state, action: PayloadAction<string>) => {
-      state.courses = state.courses.filter(course => course.id !== action.payload);
+      state.courses = state.courses.filter((course) => course.id !== action.payload);
     },
     updateCourse: (state, action: PayloadAction<Course>) => {
-      const index = state.courses.findIndex(course => course.id === action.payload.id);
+      const index = state.courses.findIndex((course) => course.id === action.payload.id);
       if (index !== -1) {
         state.courses[index] = action.payload;
       }

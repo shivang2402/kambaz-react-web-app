@@ -1,16 +1,18 @@
 import { Button, Card, Col, Row, Form } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
-import { addCourse, updateCourse, deleteCourse } from "./Courses/actions"; // Added deleteCourse import
+import { addCourse, updateCourse, deleteCourse } from "./Courses/actions";
 import { enrollCourse, unenrollCourse } from "./Enrollments/actions";
 import { Course } from "./Courses/types";
 import { Link } from "react-router-dom";
 
 export default function Dashboard() {
   const dispatch = useDispatch();
+
   const { currentUser } = useSelector((state: any) => state.accountReducer);
   const courses: Course[] = useSelector((state: any) => state.courseReducer.courses);
-  const enrolledCourses = useSelector((state: any) => state.enrollmentReducer.enrolledCourses);
+  const enrolledCourses = useSelector((state: any) => state.enrollmentReducer?.enrolledCourses ?? []);
+
   const isFaculty = currentUser?.role === "FACULTY";
 
   const [course, setCourse] = useState<Course>({
@@ -26,10 +28,13 @@ export default function Dashboard() {
   });
 
   const handleAddNewCourse = () => {
-    dispatch(addCourse({
-      ...course,
-      id: Date.now().toString()
-    }));
+    dispatch(
+      addCourse({
+        ...course,
+        id: Date.now().toString(),
+        image: course.image || "/images/reactjs.jpg",
+      })
+    );
     resetForm();
   };
 
@@ -51,7 +56,17 @@ export default function Dashboard() {
   };
 
   const resetForm = () => {
-    setCourse({ id: "0", title: "", name: "", number: "", startDate: "", endDate: "", image: "", description: "", instructor: "" });
+    setCourse({
+      id: "0",
+      title: "",
+      name: "",
+      number: "",
+      startDate: "",
+      endDate: "",
+      image: "",
+      description: "",
+      instructor: "",
+    });
   };
 
   return (
@@ -74,32 +89,57 @@ export default function Dashboard() {
           <Form>
             <Form.Group className="mb-2">
               <Form.Label>Course Name</Form.Label>
-              <Form.Control type="text" value={course.name} onChange={(e) => setCourse({ ...course, name: e.target.value })} />
+              <Form.Control
+                type="text"
+                value={course.name}
+                onChange={(e) => setCourse({ ...course, name: e.target.value })}
+              />
             </Form.Group>
 
             <Form.Group className="mb-2">
               <Form.Label>Course Number</Form.Label>
-              <Form.Control type="text" value={course.number} onChange={(e) => setCourse({ ...course, number: e.target.value })} />
+              <Form.Control
+                type="text"
+                value={course.number}
+                onChange={(e) => setCourse({ ...course, number: e.target.value })}
+              />
             </Form.Group>
 
             <Form.Group className="mb-2">
               <Form.Label>Start Date</Form.Label>
-              <Form.Control type="date" value={course.startDate} onChange={(e) => setCourse({ ...course, startDate: e.target.value })} />
+              <Form.Control
+                type="date"
+                value={course.startDate}
+                onChange={(e) => setCourse({ ...course, startDate: e.target.value })}
+              />
             </Form.Group>
 
             <Form.Group className="mb-2">
               <Form.Label>End Date</Form.Label>
-              <Form.Control type="date" value={course.endDate} onChange={(e) => setCourse({ ...course, endDate: e.target.value })} />
+              <Form.Control
+                type="date"
+                value={course.endDate}
+                onChange={(e) => setCourse({ ...course, endDate: e.target.value })}
+              />
             </Form.Group>
 
             <Form.Group className="mb-2">
               <Form.Label>Image URL</Form.Label>
-              <Form.Control type="text" value={course.image} onChange={(e) => setCourse({ ...course, image: e.target.value })} />
+              <Form.Control
+                type="text"
+                value={course.image}
+                onChange={(e) => setCourse({ ...course, image: e.target.value })}
+              />
             </Form.Group>
 
             <Form.Group className="mb-2">
               <Form.Label>Description</Form.Label>
-              <Form.Control as="textarea" rows={3} value={course.description} onChange={(e) => setCourse({ ...course, description: e.target.value })} />
+              <Form.Control
+                as="textarea"
+                rows={3}
+                value={course.description}
+                onChange={(e) => setCourse({ ...course, description: e.target.value })}
+              />
             </Form.Group>
           </Form>
           <hr />
@@ -114,16 +154,36 @@ export default function Dashboard() {
           {courses.map((course) => (
             <Col key={course.id} className="wd-dashboard-course" style={{ width: "300px" }}>
               <Card>
-                <Link to={`/Kambaz/Courses/${course.id}/Home`} className="wd-dashboard-course-link text-decoration-none text-dark">
-                  <Card.Img src={typeof course.image || "/images/reactjs.jpg"} variant="top" width="100%" height={160} />
+                <Link
+                  to={`/Kambaz/Courses/${course.id}/Home`}
+                  className="wd-dashboard-course-link text-decoration-none text-dark"
+                >
+                  <Card.Img
+                    src={String(course.image) || "/images/reactjs.jpg"}
+                    variant="top"
+                    width="100%"
+                    height={160}
+                  />
+
                   <Card.Body className="card-body">
-                    <Card.Title className="wd-dashboard-course-title text-nowrap overflow-hidden">{course.name}</Card.Title>
-                    <Card.Text className="wd-dashboard-course-description overflow-hidden" style={{ height: "100px" }}>{course.description}</Card.Text>
-                    
+                    <Card.Title className="wd-dashboard-course-title text-nowrap overflow-hidden">
+                      {course.name}
+                    </Card.Title>
+                    <Card.Text
+                      className="wd-dashboard-course-description overflow-hidden"
+                      style={{ height: "100px" }}
+                    >
+                      {course.description}
+                    </Card.Text>
+
                     {enrolledCourses.includes(course.id) ? (
-                      <Button variant="danger btn-sm" onClick={() => handleUnenroll(course.id)}>Unenroll</Button>
+                      <Button variant="danger btn-sm" onClick={() => handleUnenroll(course.id)}>
+                        Unenroll
+                      </Button>
                     ) : (
-                      <Button variant="success btn-sm" onClick={() => handleEnroll(course.id)}>Enroll</Button>
+                      <Button variant="success btn-sm" onClick={() => handleEnroll(course.id)}>
+                        Enroll
+                      </Button>
                     )}
                   </Card.Body>
                 </Link>

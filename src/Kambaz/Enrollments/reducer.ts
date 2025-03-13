@@ -5,7 +5,7 @@ interface EnrollmentState {
 }
 
 const initialState: EnrollmentState = {
-  enrolledCourses: ["course-101", "course-202", "course-303"], // Default courses
+  enrolledCourses: ["RS108", "RS102", "RS101"], // Default courses
 };
 
 const enrollmentsSlice = createSlice({

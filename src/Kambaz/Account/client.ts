@@ -1,12 +1,16 @@
 import axios from "axios";
 
-const axiosWithCredentials = axios.create({
-  baseURL: "http://localhost:4000/",
-  withCredentials: true, // 🔥 THIS is critical
-});
+
 
 export const REMOTE_SERVER = import.meta.env.VITE_REMOTE_SERVER;
 export const USERS_API = `${REMOTE_SERVER}/api/users`;
+const axiosWithCredentials = axios.create({
+  // baseURL: "http://localhost:4000/",
+  baseURL: REMOTE_SERVER,
+
+  
+  withCredentials: true, // 🔥 THIS is critical
+});
 
 export const signin = async (credentials: any) => {
   const response = await axiosWithCredentials.post(`${USERS_API}/signin`, credentials);

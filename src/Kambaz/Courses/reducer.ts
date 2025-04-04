@@ -8,19 +8,19 @@ interface CoursesState {
 const initialState: CoursesState = {
   courses: [
     {
-      id: "RS101",
+      _id: "RS101",
       name: "Rocket Propulsion",
       number: "RS4550",
       startDate: "2023-01-10",
       endDate: "2023-05-15",
-      description:
-        "This course provides an in-depth study of the fundamentals of rocket propulsion, covering topics such as propulsion theory, engine types, fuel chemistry, and the practical applications of rocket technology. Designed for students with a strong background in physics and engineering, the course includes both theoretical instruction and hands-on laboratory work.",
+      description: "This course provides an in-depth study of the fundamentals of rocket propulsion, covering topics such as propulsion theory, engine types, fuel chemistry, and the practical applications of rocket technology. Designed for students with a strong background in physics and engineering, the course includes both theoretical instruction and hands-on laboratory work.",
       image: "/images/reactjs.jpg",
       title: "Rocket Propulsion",
       instructor: "",
+      enrolled: undefined
     },
     {
-      id: "RS102",
+      _id: "RS102",
       name: "Aerodynamics",
       number: "RS4560",
       startDate: "2023-01-10",
@@ -30,9 +30,11 @@ const initialState: CoursesState = {
       image: "/images/reactjs.jpg",
       title: "Aerodynamics",
       instructor: "",
+      enrolled: undefined
+
     },
     {
-      id: "RS103",
+      _id: "RS103",
       name: "Spacecraft Design",
       number: "RS4570",
       startDate: "2023-01-10",
@@ -42,9 +44,11 @@ const initialState: CoursesState = {
       image: "/images/reactjs.jpg",
       title: "Spacecraft Design",
       instructor: "",
+      enrolled: undefined
+
     },
     {
-      id: "RS104",
+      _id: "RS104",
       name: "Organic Chemistry",
       number: "CH1230",
       startDate: "2023-01-10",
@@ -54,9 +58,11 @@ const initialState: CoursesState = {
       image: "/images/reactjs.jpg",
       title: "Organic Chemistry",
       instructor: "",
+      enrolled: undefined
+
     },
     {
-      id: "RS105",
+      _id: "RS105",
       name: "Inorganic Chemistry",
       number: "CH1240",
       startDate: "2023-01-10",
@@ -66,9 +72,11 @@ const initialState: CoursesState = {
       image: "/images/reactjs.jpg",
       title: "Inorganic Chemistry",
       instructor: "",
+      enrolled: undefined
+
     },
     {
-      id: "RS106",
+      _id: "RS106",
       name: "Physical Chemistry",
       number: "CH1250",
       startDate: "2023-01-10",
@@ -78,9 +86,11 @@ const initialState: CoursesState = {
       image: "/images/reactjs.jpg",
       title: "Physical Chemistry",
       instructor: "",
+      enrolled: undefined
+
     },
     {
-      id: "RS107",
+      _id: "RS107",
       name: "Ancient Languages and Scripts of Middle-earth",
       number: "ME101",
       startDate: "2023-01-10",
@@ -90,9 +100,11 @@ const initialState: CoursesState = {
       image: "/images/reactjs.jpg",
       title: "Ancient Languages and Scripts of Middle-earth",
       instructor: "",
+      enrolled: undefined
+
     },
     {
-      id: "RS108",
+      _id: "RS108",
       name: "Wizards, Elves, and Men: Inter-species Diplomacy in Middle-earth",
       number: "ME102",
       startDate: "2023-01-10",
@@ -102,6 +114,8 @@ const initialState: CoursesState = {
       image: "/images/reactjs.jpg",
       title: "Wizards, Elves, and Men: Inter-species Diplomacy in Middle-earth",
       instructor: "",
+      enrolled: undefined
+
     },
   ],
 };
@@ -114,10 +128,10 @@ const coursesSlice = createSlice({
       state.courses.push(action.payload);
     },
     deleteCourse: (state, action: PayloadAction<string>) => {
-      state.courses = state.courses.filter((course) => course.id !== action.payload);
+      state.courses = state.courses.filter((course) => course._id !== action.payload);
     },
     updateCourse: (state, action: PayloadAction<Course>) => {
-      const index = state.courses.findIndex((course) => course.id === action.payload.id);
+      const index = state.courses.findIndex((course) => course._id === action.payload._id);
       if (index !== -1) {
         state.courses[index] = action.payload;
       }

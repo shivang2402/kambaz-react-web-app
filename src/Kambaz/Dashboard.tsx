@@ -1,88 +1,48 @@
+
 import { Button, Card, Col, Row, Form } from "react-bootstrap";
-import { useSelector, useDispatch } from "react-redux";
-import { useState } from "react";
-import { addCourse, updateCourse, deleteCourse } from "./Courses/actions";
-import { enrollCourse, unenrollCourse } from "./Enrollments/actions";
+import { useSelector } from "react-redux";
 import { Course } from "./Courses/types";
 import { Link } from "react-router-dom";
 
-export default function Dashboard() {
-  const dispatch = useDispatch();
-
+export default function Dashboard({
+  courses,
+  course,
+  setCourse,
+  addNewCourse,
+  deleteCourse,
+  updateCourse,
+  enrollCourse,
+  unenrollCourse,
+}: any) {
   const { currentUser } = useSelector((state: any) => state.accountReducer);
-  const courses: Course[] = useSelector((state: any) => state.courseReducer.courses);
-  const enrolledCourses = useSelector((state: any) => state.enrollmentReducer?.enrolledCourses ?? []);
-
   const isFaculty = currentUser?.role === "FACULTY";
-
-  const [course, setCourse] = useState<Course>({
-    id: "0",
-    title: "",
-    name: "",
-    number: "",
-    startDate: "",
-    endDate: "",
-    image: "",
-    description: "",
-    instructor: "",
-  });
-
-  const handleAddNewCourse = () => {
-    dispatch(
-      addCourse({
-        ...course,
-        id: Date.now().toString(),
-        image: course.image || "/images/reactjs.jpg",
-      })
-    );
-    resetForm();
-  };
-
-  const handleUpdateCourse = () => {
-    dispatch(updateCourse(course));
-    resetForm();
-  };
-
-  const handleDeleteCourse = (courseId: string) => {
-    dispatch(deleteCourse(courseId));
-  };
-
-  const handleEnroll = (courseId: string) => {
-    dispatch(enrollCourse(courseId));
-  };
-
-  const handleUnenroll = (courseId: string) => {
-    dispatch(unenrollCourse(courseId));
-  };
-
-  const resetForm = () => {
-    setCourse({
-      id: "0",
-      title: "",
-      name: "",
-      number: "",
-      startDate: "",
-      endDate: "",
-      image: "",
-      description: "",
-      instructor: "",
-    });
-  };
 
   return (
     <div id="wd-dashboard">
       <h1 id="wd-dashboard-title">Dashboard</h1>
       <hr />
 
-      {/* New/Edit Course Form - Visible only for Faculty */}
+      {/* New/Edit Course Form - Faculty only */}
       {isFaculty && (
         <>
           <h5>
-            {course.id === "0" ? "New Course" : "Edit Course"}
-            <Button className="btn btn-primary float-end btn-sm" onClick={handleAddNewCourse}>
+            {!course._id ? "New Course" : "Edit Course"}
+            <Button
+              className="btn btn-primary float-end btn-sm"
+              onClick={() => {
+                addNewCourse();
+                setTimeout(() => {
+                  const courseIds = courses.map((c: Course) => c._id);
+                  console.log("Course IDs after add:", courseIds);
+                }, 100);
+              }}
+            >
               Add
             </Button>
-            <Button className="btn btn-warning float-end me-2 btn-sm" onClick={handleUpdateCourse}>
+            <Button
+              className="btn btn-warning float-end me-2 btn-sm"
+              onClick={updateCourse}
+            >
               Update
             </Button>
           </h5>
@@ -101,7 +61,9 @@ export default function Dashboard() {
               <Form.Control
                 type="text"
                 value={course.number}
-                onChange={(e) => setCourse({ ...course, number: e.target.value })}
+                onChange={(e) =>
+                  setCourse({ ...course, number: e.target.value })
+                }
               />
             </Form.Group>
 
@@ -110,7 +72,9 @@ export default function Dashboard() {
               <Form.Control
                 type="date"
                 value={course.startDate}
-                onChange={(e) => setCourse({ ...course, startDate: e.target.value })}
+                onChange={(e) =>
+                  setCourse({ ...course, startDate: e.target.value })
+                }
               />
             </Form.Group>
 
@@ -119,7 +83,9 @@ export default function Dashboard() {
               <Form.Control
                 type="date"
                 value={course.endDate}
-                onChange={(e) => setCourse({ ...course, endDate: e.target.value })}
+                onChange={(e) =>
+                  setCourse({ ...course, endDate: e.target.value })
+                }
               />
             </Form.Group>
 
@@ -128,7 +94,9 @@ export default function Dashboard() {
               <Form.Control
                 type="text"
                 value={course.image}
-                onChange={(e) => setCourse({ ...course, image: e.target.value })}
+                onChange={(e) =>
+                  setCourse({ ...course, image: e.target.value })
+                }
               />
             </Form.Group>
 
@@ -138,7 +106,9 @@ export default function Dashboard() {
                 as="textarea"
                 rows={3}
                 value={course.description}
-                onChange={(e) => setCourse({ ...course, description: e.target.value })}
+                onChange={(e) =>
+                  setCourse({ ...course, description: e.target.value })
+                }
               />
             </Form.Group>
           </Form>
@@ -146,20 +116,20 @@ export default function Dashboard() {
         </>
       )}
 
-      {/* Published Courses */}
-      <h2 id="wd-dashboard-published">Published Courses ({courses.length})</h2>
+      {/* Enrolled Courses */}
+      <h2 id="wd-dashboard-published">My Courses ({courses.length})</h2>
       <hr />
       <div id="wd-dashboard-courses">
         <Row xs={1} md={5} className="g-4">
-          {courses.map((course) => (
-            <Col key={course.id} className="wd-dashboard-course" style={{ width: "300px" }}>
+          {courses.map((course: Course) => (
+            <Col key={course._id} className="wd-dashboard-course" style={{ width: "300px" }}>
               <Card>
                 <Link
-                  to={`/Kambaz/Courses/${course.id}/Home`}
+                  to={`/Kambaz/Courses/${course._id}/Home`}
                   className="wd-dashboard-course-link text-decoration-none text-dark"
                 >
                   <Card.Img
-                    src={String(course.image) || "/images/reactjs.jpg"}
+                    src={"/images/reactjs.jpg"}
                     variant="top"
                     width="100%"
                     height={160}
@@ -175,18 +145,31 @@ export default function Dashboard() {
                     >
                       {course.description}
                     </Card.Text>
+                  </Card.Body>
+                </Link>
 
-                    {enrolledCourses.includes(course.id) ? (
-                      <Button variant="danger btn-sm" onClick={() => handleUnenroll(course.id)}>
+                {/* Student Controls: Enroll / Unenroll */}
+                {currentUser?.role === "STUDENT" && (
+                  <div className="p-2">
+                    {course.enrolled ? (
+                      <Button
+                        variant="outline-danger"
+                        size="sm"
+                        onClick={() => unenrollCourse(course._id)}
+                      >
                         Unenroll
                       </Button>
                     ) : (
-                      <Button variant="success btn-sm" onClick={() => handleEnroll(course.id)}>
+                      <Button
+                        variant="outline-success"
+                        size="sm"
+                        onClick={() => enrollCourse(course._id)}
+                      >
                         Enroll
                       </Button>
                     )}
-                  </Card.Body>
-                </Link>
+                  </div>
+                )}
 
                 {/* Faculty Controls: Edit and Delete */}
                 {isFaculty && (
@@ -201,7 +184,10 @@ export default function Dashboard() {
                     <Button
                       variant="danger"
                       className="float-end btn-sm"
-                      onClick={() => handleDeleteCourse(course.id)}
+                      onClick={() => {
+                        console.log("Clicked delete for course ID:", course._id);
+                        deleteCourse(course._id);
+                      }}
                     >
                       Delete
                     </Button>

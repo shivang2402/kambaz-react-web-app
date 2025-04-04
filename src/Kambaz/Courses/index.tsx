@@ -11,14 +11,13 @@ import PeopleTable from "./People/index";
 export default function Courses() {
   const { cid } = useParams();
   const courses = useSelector((state: any) => state.courseReducer.courses);
-  const enrolledCourses = useSelector((state: any) => state.enrollmentReducer.enrolledCourses);
   const course = courses.find((course: { id: string | undefined; }) => course.id === cid);
   const { pathname } = useLocation();
 
-  // Redirect users who are not enrolled in the course
-  if (!course || !enrolledCourses.includes(cid)) {
-    return <Navigate to="/Kambaz/Dashboard" replace />;
-  }
+  // // Redirect users who are not enrolled in the course
+  // if (!course || !enrolledCourses.includes(cid)) {
+  //   return <Navigate to="/Kambaz/Dashboard" replace />;
+  // }
 
   // Extract the section name from the URL path
   const section = pathname.split("/")[4] || "Home";

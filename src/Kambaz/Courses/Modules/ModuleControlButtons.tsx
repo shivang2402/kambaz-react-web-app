@@ -1,32 +1,3 @@
-// import { FaTrash, FaPencil } from "react-icons/fa6";
-// import { BsPlus } from "react-icons/bs";
-// import GreenCheckmark from "./GreenCheckmark";
-
-// export default function ModuleControlButtons({
-//   moduleId,
-//   deleteModule,
-//   editModule,
-// }: {
-//   moduleId: string;
-//   deleteModule: () => void;
-//   editModule: () => void;
-// }) {
-//   return (
-//     <div className="float-end">
-//       {/* Edit Module */}
-//       <FaPencil className="text-primary me-3" onClick={editModule} />
-
-//       {/* Delete Module */}
-//       <FaTrash className="text-danger me-3" onClick={deleteModule} />
-
-//       {/* Green Checkmark */}
-//       <GreenCheckmark />
-
-//       {/* Plus Button (Placeholder for Additional Functionality) */}
-//       <BsPlus className="fs-4" />
-//     </div>
-//   );
-// }
 
 
 import GreenCheckmark from "./GreenCheckmark";
